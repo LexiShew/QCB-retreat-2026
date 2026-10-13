@@ -10,8 +10,8 @@ contact_email: "shewchuk@usc.edu"
 # If your site lives at https://USERNAME.github.io/REPO-NAME/,
 # set baseurl to "/REPO-NAME". If it's a user site
 # (https://USERNAME.github.io/), leave it as "".
-baseurl: "LexiShew"
-url: "QCB-retreat-2026"
+baseurl: "/QCB-retreat-2026"
+url: "https://lexishew.github.io/QCB-retreat-2026/"
 
 # ---------------------------------------------------------------
 # CSV column names — change these if your spreadsheet headers differ
