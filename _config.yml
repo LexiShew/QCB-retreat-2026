@@ -3,15 +3,15 @@
 # ---------------------------------------------------------------
 title: "Department Retreat 2026"
 tagline: "Talks, posters, and abstracts"
-dates: "Month DD–DD, 2026"
-location: "Venue name, City"
-contact_email: "organizer@example.edu"
+dates: "November 11, 2026"
+location: "Los Angeles, CA"
+contact_email: "shewchuk@usc.edu"
 
 # If your site lives at https://USERNAME.github.io/REPO-NAME/,
 # set baseurl to "/REPO-NAME". If it's a user site
 # (https://USERNAME.github.io/), leave it as "".
-baseurl: ""
-url: ""
+baseurl: "LexiShew"
+url: "QCB-retreat-2026"
 
 # ---------------------------------------------------------------
 # CSV column names — change these if your spreadsheet headers differ
