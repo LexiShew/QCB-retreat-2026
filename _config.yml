@@ -1,0 +1,36 @@
+# ---------------------------------------------------------------
+# Site settings — edit these
+# ---------------------------------------------------------------
+title: "Department Retreat 2026"
+tagline: "Talks, posters, and abstracts"
+dates: "Month DD–DD, 2026"
+location: "Venue name, City"
+contact_email: "organizer@example.edu"
+
+# If your site lives at https://USERNAME.github.io/REPO-NAME/,
+# set baseurl to "/REPO-NAME". If it's a user site
+# (https://USERNAME.github.io/), leave it as "".
+baseurl: ""
+url: ""
+
+# ---------------------------------------------------------------
+# CSV column names — change these if your spreadsheet headers differ
+# (the CSV lives at _data/abstracts.csv)
+# ---------------------------------------------------------------
+columns:
+  id: "id"            # optional; used for links. Blank = generated from title
+  type: "type"        # e.g. Talk / Poster
+  title: "title"
+  authors: "authors"
+  affiliation: "affiliation"   # optional
+  abstract: "abstract"
+
+# Order that presentation types appear on the abstracts page.
+# Any type in the CSV that isn't listed here is shown afterward.
+type_order:
+  - Talk
+  - Poster
+
+markdown: kramdown
+exclude:
+  - README.md

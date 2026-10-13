@@ -1,0 +1,37 @@
+---
+layout: default
+title: Home
+---
+{%- assign c = site.columns -%}
+{%- assign groups = site.data.abstracts | group_by: c.type -%}
+
+<section class="hero">
+  <h1>{{ site.title }}</h1>
+  <p class="meta">{{ site.dates }} · {{ site.location }}</p>
+  <p>{{ site.tagline }}</p>
+</section>
+
+<div class="quick-links">
+  <a href="{{ '/schedule/' | relative_url }}">
+    <strong>Schedule</strong>
+    Sessions, breaks, and locations by day
+  </a>
+  <a href="{{ '/abstracts/' | relative_url }}">
+    <strong>Talks &amp; Abstracts</strong>
+    {{ site.data.abstracts.size }} presentations{% for g in groups %} · {{ g.items.size }} {{ g.name | default: "other" | downcase }}{% if g.items.size != 1 %}s{% endif %}{% endfor %}
+  </a>
+</div>
+
+<h2>Welcome</h2>
+<p>
+  Replace this paragraph with a short welcome: what the retreat is for,
+  who's attending, and anything people should know before arriving.
+</p>
+
+<h2>Logistics</h2>
+<ul>
+  <li><strong>Getting there:</strong> parking / shuttle details</li>
+  <li><strong>Posters:</strong> size limit (e.g. 36&times;48 in), set-up time, board numbers</li>
+  <li><strong>Talks:</strong> length, laptop/adapter info, where to send slides</li>
+  <li><strong>Questions:</strong> <a href="mailto:{{ site.contact_email }}">{{ site.contact_email }}</a></li>
+</ul>

@@ -1,0 +1,7 @@
+id,type,title,authors,affiliation,abstract
+T1,Talk,Geometric deep learning of protein–DNA binding specificity,"A. Researcher, B. Student, C. PI",Dept. of Quantitative & Computational Biology,"Predicting binding specificity is ""hard."" We present a model that works across families.
+
+Second paragraph: results show p < 0.01 & MAE improves."
+T2,Talk,Single-cell atlas of the developing retina,"D. Postdoc, E. PI",Dept. of Biological Sciences,"We profiled 120,000 cells across six timepoints, identifying 14 progenitor states."
+P1,Poster,Bayesian models of enhancer evolution,"F. Student, G. PI",,"Short abstract with commas, quotes ('like this'), and an em dash — all fine."
+P2,Poster,A fast aligner for long reads,H. Student,Dept. of Computer Science,Benchmarks on simulated and real ONT data.
