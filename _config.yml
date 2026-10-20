@@ -26,10 +26,16 @@ columns:
   abstract: "abstract"
 
 # ---------------------------------------------------------------
-# Column names for the abstracts page (_data/talk_abstracts.csv).
-# These must match that file's header row exactly.
+# Column names for the abstracts page. Each must match its CSV's header row exactly.
+# Talks: _data/talk_abstracts.csv. Posters: _data/poster_abstracts.csv.
 # ---------------------------------------------------------------
 talk_columns:
+  title: "Talk/Poster Title"
+  authors: "Author(s)"
+  affiliation: "Please indicate your lab affiliation."
+  abstract: "Abstract"
+
+poster_columns:
   title: "Talk/Poster Title"
   authors: "Author(s)"
   affiliation: "Please indicate your lab affiliation."

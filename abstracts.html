@@ -1,69 +1,115 @@
 ---
 layout: default
-title: Talks & Abstracts
+title: Talks & Posters
 permalink: /abstracts/
 header_image: /assets/images/header.jpg
-banner_title: Talks
+banner_title: Talks & Posters
 ---
-{%- comment -%}
-  Everything on this page is generated from _data/talk_abstracts.csv.
-  Column names come from `talk_columns:` in _config.yml.
-{%- endcomment -%}
-{%- assign c = site.talk_columns -%}
-{%- assign rows = site.data.talk_abstracts -%}
 
-<h1>Talks &amp; Abstracts</h1>
-<p class="stats">{{ rows.size }} talks</p>
+{%- comment -%} Talks are generated from _data/talk_abstracts.csv (columns:
+talk_columns in _config.yml). Posters are generated from
+_data/poster_abstracts.csv (columns: poster_columns in _config.yml). {%-
+endcomment -%} {%- assign tc = site.talk_columns -%} {%- assign talks =
+site.data.talk_abstracts -%} {%- assign pc = site.poster_columns -%} {%- assign
+posters = site.data.poster_abstracts -%}
 
-<input id="q" class="search" type="search" aria-label="Search abstracts" placeholder="Search titles, authors, or abstract text…" autocomplete="off">
+<h1>Talks &amp; Posters</h1>
+<p class="stats">{{ talks.size }} talks · {{ posters.size }} posters</p>
+
+<input
+  id="q"
+  class="search"
+  type="search"
+  aria-label="Search abstracts"
+  placeholder="Search titles, authors, or abstract text…"
+  autocomplete="off"
+/>
 <p id="count" class="search-count" aria-live="polite"></p>
 
 <h2 id="contents">Contents</h2>
 <nav class="toc" aria-label="Table of contents">
   <h3>Talks</h3>
   <ol>
-    {%- for a in rows %}
-    {%- assign aid = a[c.title] | slugify | prepend: "abs-" -%}
-    <li data-key="{{ aid }}"><a href="#{{ aid }}">{{ a[c.title] | escape }}</a>
-      <span class="toc-authors">— {{ a[c.authors] | escape }}</span></li>
+    {%- for a in talks %} {%- assign aid = a[tc.title] | slugify | prepend:
+    "abs-" -%}
+    <li data-key="{{ aid }}">
+      <a href="#{{ aid }}">{{ a[tc.title] | escape }}</a>
+      <span class="toc-authors">— {{ a[tc.authors] | escape }}</span>
+    </li>
+    {%- endfor %}
+  </ol>
+  <h3>Posters</h3>
+  <ol>
+    {%- for a in posters %} {%- assign aid = a[pc.title] | slugify | prepend:
+    "abs-" -%}
+    <li data-key="{{ aid }}">
+      <a href="#{{ aid }}">{{ a[pc.title] | escape }}</a>
+      <span class="toc-authors">— {{ a[pc.authors] | escape }}</span>
+    </li>
     {%- endfor %}
   </ol>
 </nav>
 
 <h2 id="talks">Talks</h2>
-{%- for a in rows %}
-{%- assign aid = a[c.title] | slugify | prepend: "abs-" -%}
+{%- for a in talks %} {%- assign aid = a[tc.title] | slugify | prepend: "abs-"
+-%}
 <article class="abstract" id="{{ aid }}" data-key="{{ aid }}">
   <span class="badge">Talk</span>
-  <h3>{{ a[c.title] | escape }}</h3>
-  <p class="authors">{{ a[c.authors] | escape }}</p>
-  {%- if a[c.affiliation] and a[c.affiliation] != "" %}
-  <p class="affil">{{ a[c.affiliation] | escape }}</p>
+  <h3>{{ a[tc.title] | escape }}</h3>
+  <p class="authors">{{ a[tc.authors] | escape }}</p>
+  {%- if a[tc.affiliation] and a[tc.affiliation] != "" %}
+  <p class="affil">{{ a[tc.affiliation] | escape }}</p>
   {%- endif %}
-  <p class="body">{{ a[c.abstract] | strip | escape | newline_to_br }}</p>
+  <p class="body">{{ a[tc.abstract] | strip | escape | newline_to_br }}</p>
+  <p class="top"><a href="#contents">↑ Back to contents</a></p>
+</article>
+{%- endfor %}
+
+<h2 id="posters">Posters</h2>
+{%- for a in posters %} {%- assign aid = a[pc.title] | slugify | prepend: "abs-"
+-%}
+<article class="abstract" id="{{ aid }}" data-key="{{ aid }}">
+  <span class="badge">Poster</span>
+  <h3>{{ a[pc.title] | escape }}</h3>
+  <p class="authors">{{ a[pc.authors] | escape }}</p>
+  {%- if a[pc.affiliation] and a[pc.affiliation] != "" %}
+  <p class="affil">{{ a[pc.affiliation] | escape }}</p>
+  {%- endif %}
+  <p class="body">{{ a[pc.abstract] | strip | escape | newline_to_br }}</p>
   <p class="top"><a href="#contents">↑ Back to contents</a></p>
 </article>
 {%- endfor %}
 
 <script>
-(function () {
-  var input = document.getElementById("q");
-  var count = document.getElementById("count");
-  var cards = Array.prototype.slice.call(document.querySelectorAll(".abstract"));
-  var tocItems = {};
-  document.querySelectorAll(".toc li").forEach(function (li) { tocItems[li.dataset.key] = li; });
-  var text = cards.map(function (el) { return el.textContent.toLowerCase(); });
-
-  input.addEventListener("input", function () {
-    var terms = input.value.toLowerCase().trim().split(/\s+/).filter(Boolean);
-    var shown = 0;
-    cards.forEach(function (el, i) {
-      var hit = terms.every(function (t) { return text[i].indexOf(t) !== -1; });
-      el.classList.toggle("hidden", !hit);
-      if (tocItems[el.dataset.key]) tocItems[el.dataset.key].classList.toggle("hidden", !hit);
-      if (hit) shown++;
+  (function () {
+    var input = document.getElementById("q");
+    var count = document.getElementById("count");
+    var cards = Array.prototype.slice.call(
+      document.querySelectorAll(".abstract"),
+    );
+    var tocItems = {};
+    document.querySelectorAll(".toc li").forEach(function (li) {
+      tocItems[li.dataset.key] = li;
     });
-    count.textContent = terms.length ? shown + " of " + cards.length + " match" : "";
-  });
-})();
+    var text = cards.map(function (el) {
+      return el.textContent.toLowerCase();
+    });
+
+    input.addEventListener("input", function () {
+      var terms = input.value.toLowerCase().trim().split(/\s+/).filter(Boolean);
+      var shown = 0;
+      cards.forEach(function (el, i) {
+        var hit = terms.every(function (t) {
+          return text[i].indexOf(t) !== -1;
+        });
+        el.classList.toggle("hidden", !hit);
+        if (tocItems[el.dataset.key])
+          tocItems[el.dataset.key].classList.toggle("hidden", !hit);
+        if (hit) shown++;
+      });
+      count.textContent = terms.length
+        ? shown + " of " + cards.length + " match"
+        : "";
+    });
+  })();
 </script>
