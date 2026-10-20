@@ -4,55 +4,35 @@ title: Talks & Abstracts
 permalink: /abstracts/
 ---
 {%- comment -%}
-  Everything on this page is generated from _data/abstracts.csv.
-  Column names come from `columns:` in _config.yml.
+  Everything on this page is generated from _data/poster_abstracts.csv.
+  Column names come from `poster_columns:` in _config.yml.
 {%- endcomment -%}
-{%- assign c = site.columns -%}
-{%- assign rows = site.data.abstracts -%}
-{%- assign groups = rows | group_by: c.type -%}
-
-{%- comment -%} Put groups in the order given by type_order, then any extras {%- endcomment -%}
-{%- assign ordered = "" | split: "" -%}
-{%- for t in site.type_order -%}
-  {%- assign g = groups | where: "name", t | first -%}
-  {%- if g -%}{%- assign ordered = ordered | push: g -%}{%- endif -%}
-{%- endfor -%}
-{%- for g in groups -%}
-  {%- unless site.type_order contains g.name -%}{%- assign ordered = ordered | push: g -%}{%- endunless -%}
-{%- endfor -%}
+{%- assign c = site.poster_columns -%}
+{%- assign rows = site.data.poster_abstracts -%}
 
 <h1>Talks &amp; Abstracts</h1>
-<p class="stats">{{ rows.size }} presentations{% for g in ordered %} · {{ g.items.size }} {{ g.name | default: "Other" | downcase }}{% if g.items.size != 1 %}s{% endif %}{% endfor %}</p>
+<p class="stats">{{ rows.size }} posters</p>
 
 <input id="q" class="search" type="search" aria-label="Search abstracts" placeholder="Search titles, authors, or abstract text…" autocomplete="off">
 <p id="count" class="search-count" aria-live="polite"></p>
 
 <h2 id="contents">Contents</h2>
 <nav class="toc" aria-label="Table of contents">
-  {%- for g in ordered %}
-  {%- assign gname = g.name | default: "Other" -%}
-  {%- assign last = gname | slice: -1 -%}
-  <h3>{{ gname }}{% unless last == "s" %}s{% endunless %}</h3>
+  <h3>Posters</h3>
   <ol>
-    {%- for a in g.items %}
-    {%- assign t_title = a[c.title] -%}{%- assign raw_id = a[c.id] | default: t_title -%}
-    {%- assign aid = raw_id | slugify | prepend: "abs-" -%}
+    {%- for a in rows %}
+    {%- assign aid = a[c.title] | slugify | prepend: "abs-" -%}
     <li data-key="{{ aid }}"><a href="#{{ aid }}">{{ a[c.title] | escape }}</a>
       <span class="toc-authors">— {{ a[c.authors] | escape }}</span></li>
     {%- endfor %}
   </ol>
-  {%- endfor %}
 </nav>
 
-{%- for g in ordered %}
-{%- assign gname = g.name | default: "Other" -%}
-{%- assign last = gname | slice: -1 -%}
-<h2 id="{{ gname | slugify }}">{{ gname }}{% unless last == "s" %}s{% endunless %}</h2>
-  {%- for a in g.items %}
-  {%- assign t_title = a[c.title] -%}{%- assign raw_id = a[c.id] | default: t_title -%}
-  {%- assign aid = raw_id | slugify | prepend: "abs-" -%}
+<h2 id="posters">Posters</h2>
+{%- for a in rows %}
+{%- assign aid = a[c.title] | slugify | prepend: "abs-" -%}
 <article class="abstract" id="{{ aid }}" data-key="{{ aid }}">
-  <span class="badge">{{ gname }}{% if a[c.id] and a[c.id] != "" %} {{ a[c.id] | escape }}{% endif %}</span>
+  <span class="badge">Poster</span>
   <h3>{{ a[c.title] | escape }}</h3>
   <p class="authors">{{ a[c.authors] | escape }}</p>
   {%- if a[c.affiliation] and a[c.affiliation] != "" %}
@@ -61,7 +41,6 @@ permalink: /abstracts/
   <p class="body">{{ a[c.abstract] | strip | escape | newline_to_br }}</p>
   <p class="top"><a href="#contents">↑ Back to contents</a></p>
 </article>
-  {%- endfor %}
 {%- endfor %}
 
 <script>

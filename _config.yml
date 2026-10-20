@@ -25,6 +25,16 @@ columns:
   affiliation: "affiliation"   # optional
   abstract: "abstract"
 
+# ---------------------------------------------------------------
+# Column names for the abstracts page (_data/poster_abstracts.csv).
+# These must match that file's header row exactly.
+# ---------------------------------------------------------------
+poster_columns:
+  title: "Talk/Poster Title"
+  authors: "Author(s)"
+  affiliation: "Please indicate your lab affiliation."
+  abstract: "Abstract"
+
 # Order that presentation types appear on the abstracts page.
 # Any type in the CSV that isn't listed here is shown afterward.
 type_order:
