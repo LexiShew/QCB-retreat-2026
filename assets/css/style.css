@@ -101,6 +101,8 @@ h3 { font-size: 1.2rem; margin: 0 0 .25rem; }
 .schedule th { background: var(--cardinal); color: #fff; font-weight: 600; }
 .schedule td.time { white-space: nowrap; font-variant-numeric: tabular-nums; font-weight: 600; width: 1%; }
 .schedule tr.break td { background: var(--gold-soft); font-style: italic; }
+.schedule tr.session td { background: var(--cardinal); color: #fff; font-weight: 600; }
+.schedule tr.session .speaker { color: var(--gold); font-weight: 500; }
 .schedule .speaker { color: var(--muted); font-size: .92rem; }
 .table-scroll { overflow-x: auto; }
 

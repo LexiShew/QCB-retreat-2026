@@ -5,47 +5,69 @@ permalink: /schedule/
 header_image: /assets/images/header.jpg
 ---
 {%- comment -%}
-  Generated from _data/schedule.csv.
-  Columns: day, time, event, location, speaker, talk_id, kind
-  - talk_id: matches the `id` column in abstracts.csv → links to that abstract
-  - kind: put "break" for meals/coffee to shade the row
+  Generated from _data/abridged-schedule.csv and _data/detailed-schedule.csv.
+  Shaded rows: any activity containing "break", "lunch", or "check-in".
+  Session headings: detailed rows with moderators but no speaker.
+  Speakers link to their talk abstract when "First Name" + "Last Name"
+  in talk_abstracts.csv match the speaker name exactly.
 {%- endcomment -%}
-{%- assign c = site.columns -%}
-{%- assign days = site.data.schedule | group_by: "day" -%}
 
-<h1>Schedule</h1>
+{%- assign c = site.talk_columns -%}
+
 <p class="stats">{{ site.dates }} · {{ site.location }}</p>
 
-{%- for d in days %}
-<h2 id="{{ d.name | slugify }}">{{ d.name }}</h2>
+<h2 id="abridged">Abridged schedule</h2>
 <div class="table-scroll">
 <table class="schedule">
-  <thead><tr><th>Time</th><th>Session</th><th>Location</th></tr></thead>
+  <thead><tr><th>Time</th><th>Activity</th></tr></thead>
   <tbody>
-  {%- for s in d.items %}
-    <tr{% if s.kind == "break" %} class="break"{% endif %}>
-      <td class="time">{{ s.time | escape }}</td>
-      <td>
-        {%- if s.talk_id and s.talk_id != "" -%}
-          {%- assign talk = site.data.abstracts | where: c.id, s.talk_id | first -%}
-          {%- assign aid = s.talk_id | slugify | prepend: "abs-" -%}
-          {%- if talk -%}
-            <a href="{{ '/abstracts/' | relative_url }}#{{ aid }}">{{ talk[c.title] | escape }}</a>
-            <div class="speaker">{{ talk[c.authors] | escape }}</div>
-          {%- else -%}
-            {{ s.event | escape }} <em>(no abstract found for id “{{ s.talk_id }}”)</em>
-          {%- endif -%}
-        {%- else -%}
-          {{ s.event | escape }}
-          {%- if s.speaker and s.speaker != "" %}<div class="speaker">{{ s.speaker | escape }}</div>{% endif -%}
-        {%- endif -%}
-      </td>
-      <td>{{ s.location | escape }}</td>
+  {%- for s in site.data['abridged-schedule'] %}
+    {%- assign act = s.Activity | downcase -%}
+    <tr{% if act contains "break" or act contains "lunch" or act contains "check-in" %} class="break"{% endif %}>
+      <td class="time">{{ s.Start | escape }}</td>
+      <td>{{ s.Activity | escape }}</td>
     </tr>
   {%- endfor %}
   </tbody>
 </table>
 </div>
-{%- endfor %}
+
+<h2 id="detailed">Detailed schedule</h2>
+<div class="table-scroll">
+<table class="schedule">
+  <thead><tr><th>Time</th><th>Activity</th><th>Speaker</th></tr></thead>
+  <tbody>
+  {%- for s in site.data['detailed-schedule'] %}
+    {%- assign act = s.Activity | downcase -%}
+    {%- assign spk = s.Speaker | default: "" -%}
+    {%- assign mod = s.Moderators | default: "" -%}
+    {%- assign kind = "" -%}
+    {%- if act contains "break" or act contains "lunch" or act contains "check-in" -%}
+      {%- assign kind = "break" -%}
+    {%- elsif spk == "" and mod != "" -%}
+      {%- assign kind = "session" -%}
+    {%- endif -%}
+    <tr{% if kind != "" %} class="{{ kind }}"{% endif %}>
+      <td class="time">{{ s.Start | escape }} – {{ s.End | escape }}</td>
+      <td>{{ s.Activity | escape }}</td>
+      <td>
+        {%- assign talk = "" -%}
+        {%- for t in site.data.talk_abstracts -%}
+          {%- assign full = t['First Name'] | append: " " | append: t['Last Name'] -%}
+          {%- if spk != "" and full == spk %}{%- assign talk = t -%}{%- endif -%}
+        {%- endfor -%}
+        {%- if talk != "" -%}
+          {%- assign aid = talk[c.title] | slugify | prepend: "abs-" -%}
+          <a href="{{ '/abstracts/' | relative_url }}#{{ aid }}">{{ spk | escape }}</a>
+        {%- elsif spk != "" -%}
+          {{ spk | escape }}
+        {%- endif -%}
+        {%- if mod != "" %}<div class="speaker">Moderated by {{ mod | escape }}</div>{% endif -%}
+      </td>
+    </tr>
+  {%- endfor %}
+  </tbody>
+</table>
+</div>
 
 <p class="stats" style="margin-top:1.5rem">Poster session details and all abstracts are on the <a href="{{ '/abstracts/' | relative_url }}">Talks &amp; Abstracts</a> page.</p>

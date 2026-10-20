@@ -3,24 +3,24 @@ layout: default
 title: Talks & Abstracts
 permalink: /abstracts/
 header_image: /assets/images/header.jpg
-banner_title: Posters
+banner_title: Talks
 ---
 {%- comment -%}
-  Everything on this page is generated from _data/poster_abstracts.csv.
-  Column names come from `poster_columns:` in _config.yml.
+  Everything on this page is generated from _data/talk_abstracts.csv.
+  Column names come from `talk_columns:` in _config.yml.
 {%- endcomment -%}
-{%- assign c = site.poster_columns -%}
-{%- assign rows = site.data.poster_abstracts -%}
+{%- assign c = site.talk_columns -%}
+{%- assign rows = site.data.talk_abstracts -%}
 
 <h1>Talks &amp; Abstracts</h1>
-<p class="stats">{{ rows.size }} posters</p>
+<p class="stats">{{ rows.size }} talks</p>
 
 <input id="q" class="search" type="search" aria-label="Search abstracts" placeholder="Search titles, authors, or abstract text…" autocomplete="off">
 <p id="count" class="search-count" aria-live="polite"></p>
 
 <h2 id="contents">Contents</h2>
 <nav class="toc" aria-label="Table of contents">
-  <h3>Posters</h3>
+  <h3>Talks</h3>
   <ol>
     {%- for a in rows %}
     {%- assign aid = a[c.title] | slugify | prepend: "abs-" -%}
@@ -30,11 +30,11 @@ banner_title: Posters
   </ol>
 </nav>
 
-<h2 id="posters">Posters</h2>
+<h2 id="talks">Talks</h2>
 {%- for a in rows %}
 {%- assign aid = a[c.title] | slugify | prepend: "abs-" -%}
 <article class="abstract" id="{{ aid }}" data-key="{{ aid }}">
-  <span class="badge">Poster</span>
+  <span class="badge">Talk</span>
   <h3>{{ a[c.title] | escape }}</h3>
   <p class="authors">{{ a[c.authors] | escape }}</p>
   {%- if a[c.affiliation] and a[c.affiliation] != "" %}
