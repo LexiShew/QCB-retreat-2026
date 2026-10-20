@@ -8,27 +8,17 @@
   --cardinal-dark: #6e0000;
   --gold: #FFCC00;
   --gold-soft: #fff4cc;
-  --ink: #1f1a17;
-  --muted: #5c5550;
-  --rule: #e6dfd8;
-  --bg: #fdfbf8;
+  --ink: #4a1c1c;
+  --muted: #7a5a52;
+  --rule: #ecdcb8;
+  --bg: #fffdf6;
   --card: #ffffff;
   --link: var(--cardinal);
   --serif: "Source Serif 4", Georgia, serif;
   --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --ink: #f1ece6;
-    --muted: #b9b0a8;
-    --rule: #3a3330;
-    --bg: #171312;
-    --card: #211b19;
-    --gold-soft: #3a2f10;
-    --link: #ff8a80;
-  }
-}
+/* Light only: no dark-mode override, so the palette stays red and gold. */
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
@@ -73,6 +63,16 @@ h3 { font-size: 1.2rem; margin: 0 0 .25rem; }
 }
 .site-nav a:hover { border-bottom-color: rgba(255, 204, 0, .6); }
 .site-nav a[aria-current="page"] { color: var(--gold); border-bottom-color: var(--gold); }
+
+/* ---------- page banner (optional: set header_image in front matter) ---------- */
+.page-banner {
+  background-color: var(--cardinal);
+  background-size: cover; background-position: center;
+  color: #fff;
+  border-bottom: 5px solid var(--gold);
+  padding: 2.75rem 0 2.25rem;
+}
+.page-banner h1 { margin: 0; color: #fff; font-size: 2.4rem; text-shadow: 0 2px 8px rgba(0, 0, 0, .35); }
 
 /* ---------- home ---------- */
 .hero {
@@ -143,7 +143,7 @@ h3 { font-size: 1.2rem; margin: 0 0 .25rem; }
 
 /* ---------- print: abstract book ---------- */
 @media print {
-  .site-header, .site-footer, .search, .search-count, .top { display: none; }
+  .site-header, .site-footer, .page-banner, .search, .search-count, .top { display: none; }
   .abstract { break-inside: avoid; border: none; border-left: 3px solid #000; }
   body { background: #fff; color: #000; }
 }

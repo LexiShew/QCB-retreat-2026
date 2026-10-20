@@ -22,6 +22,14 @@
     </div>
   </header>
 
+  {% if page.header_image %}
+  <section class="page-banner" style="background-image: linear-gradient(rgba(110, 0, 0, .78), rgba(153, 0, 0, .55)), url('{{ page.header_image | relative_url }}');">
+    <div class="wrap">
+      <h1>{{ page.banner_title | default: page.title }}</h1>
+    </div>
+  </section>
+  {% endif %}
+
   <main class="wrap content">
     {{ content }}
   </main>
