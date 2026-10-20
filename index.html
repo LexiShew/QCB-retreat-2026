@@ -5,25 +5,17 @@ header_image: /assets/images/header.jpg
 banner_title: Welcome
 ---
 
-{%- assign c = site.columns -%} {%- assign groups = site.data.abstracts |
-group_by: c.type -%}
-
 <section class="hero">
   <h1>{{ site.title }}</h1>
   <p class="meta">{{ site.dates }} · {{ site.location }}</p>
-  <p>{{ site.tagline }}</p>
 </section>
 
 <div class="quick-links">
   <a href="{{ '/schedule/' | relative_url }}">
     <strong>Schedule</strong>
-    Sessions, breaks, and locations by day
   </a>
   <a href="{{ '/abstracts/' | relative_url }}">
     <strong>Talks &amp; Posters</strong>
-    {{ site.data.abstracts.size }} presentations{% for g in groups %} · {{
-    g.items.size }} {{ g.name | default: "other" | downcase }}{% if g.items.size
-    != 1 %}s{% endif %}{% endfor %}
   </a>
 </div>
 
