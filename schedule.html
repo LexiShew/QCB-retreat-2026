@@ -23,8 +23,14 @@ header_image: /assets/images/header.jpg
   <tbody>
   {%- for s in site.data['abridged-schedule'] %}
     {%- assign act = s.Activity | downcase -%}
-    <tr{% if act contains "break" or act contains "lunch" or act contains "check-in" %} class="break"{% endif %}>
-      <td class="time">{{ s.Start | escape }}</td>
+    {%- assign kind = "" -%}
+    {%- if act contains "break" or act contains "lunch" or act contains "check-in" -%}
+      {%- assign kind = "break" -%}
+    {%- elsif act contains "session" -%}
+      {%- assign kind = "session" -%}
+    {%- endif -%}
+    <tr{% if kind != "" %} class="{{ kind }}"{% endif %}>
+      <td class="time">{% unless kind == "session" %}{{ s.Start | escape }}{% endunless %}</td>
       <td>{{ s.Activity | escape }}</td>
     </tr>
   {%- endfor %}
@@ -48,7 +54,7 @@ header_image: /assets/images/header.jpg
       {%- assign kind = "session" -%}
     {%- endif -%}
     <tr{% if kind != "" %} class="{{ kind }}"{% endif %}>
-      <td class="time">{{ s.Start | escape }} – {{ s.End | escape }}</td>
+      <td class="time">{% unless kind == "session" %}{{ s.Start | escape }} – {{ s.End | escape }}{% endunless %}</td>
       <td>{{ s.Activity | escape }}</td>
       <td>
         {%- assign talk = "" -%}
@@ -62,7 +68,6 @@ header_image: /assets/images/header.jpg
         {%- elsif spk != "" -%}
           {{ spk | escape }}
         {%- endif -%}
-        {%- if mod != "" %}<div class="speaker">Moderated by {{ mod | escape }}</div>{% endif -%}
       </td>
     </tr>
   {%- endfor %}
