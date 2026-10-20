@@ -1,35 +1,35 @@
-Start,End,Activity,Speaker,Moderators
+Start,End,Activity,Speaker,Type
 8:30 AM,9:15 AM,"Check-in & breakfast
-Hang posters",,
-9:15 AM,9:40 AM,Welcome and retreat overview,,
-9:15 AM,9:20 AM,From-committee remark,Jazlyn & Adam,
-9:20 AM,9:30 AM,Invited remark,James Bullock,
-9:30 AM,9:40 AM,Invited remark,Michael Waterman,
-9:40 AM,10:40 AM,Session I: Population Genomics and Systems Biology,,
-9:40 AM,10:00 AM,Edge Lab,Feriel Ouerghi,
-10:00 AM,10:20 AM,MacLean Lab,Anupam Dey,
-10:20 AM,10:40 AM,Mooney Lab,Shirin Nataneli,
-10:40 AM,11:15 AM,Coffee break,,
-11:15 AM,12:15 PM,Session II: Structural Bioinformatics and Genome Organization,,
-11:15 AM,11:35 AM,Katritch Lab,"Wenjin ""Selina"" Liu",
-11:35 AM,11:55 AM,Fudenberg Lab,Peiyu Shi,
-11:55 AM,12:15 PM,Rohs Lab,Wei Yu Tang,
-12:15 PM,12:30 PM,Lightning Talks I,,
-12:15 PM,12:18 PM,Finley Lab,Yiping Jia,
-12:18 PM,12:21 PM,Irimia Lab,Cecilia Liu,
-12:21 PM,12:24 PM,Katritch Lab,Emily Nguyen,
-12:24 PM,12:27 PM,MacLean Lab,Yingtong Liu,
-12:27 PM,12:30 PM,Rohs Lab,Peijun Lin,
-12:30 PM,12:40 PM,Guess the Lab (based on the figure),,
-12:40 PM,1:45 PM,Lunch,,
-1:45 PM,2:00 PM,Awards & Pre-keynote address,,
-1:45 PM,1:55 PM,Invited remark,,
-1:55 PM,2:00 PM,Awards for lightning talks and Guess the Lab,,
-2:00 PM,3:00 PM,Keynote Address,Lior Pachter,
-3:00 PM,3:35 PM,Coffee break,,
-3:35 PM,4:35 PM,Session III: Genomic Algorithms and Computational Methods,,
-3:35 PM,3:55 PM,Chaisson Lab,Ishaan Thota,
-3:55 PM,4:15 PM,Chen Lab,Hanyi Wang,
-4:15 PM,4:35 PM,Sun Lab,Wei Liu,
-4:35 PM,4:45 PM,Closing remarks and acknowledgments,,
-4:45 PM,6:00 PM,Poster session and reception,,
+Hang posters",,break
+9:15 AM,9:40 AM,Welcome and retreat overview,,session
+9:15 AM,9:20 AM,Retreat committee remark,Jazlyn & Adam,talk
+9:20 AM,9:30 AM,Invited remark,James Bullock,talk
+9:30 AM,9:40 AM,Invited remark,Michael Waterman,talk
+9:40 AM,10:40 AM,Session I: Population Genomics and Systems Biology,,session
+9:40 AM,10:00 AM,Edge Lab,Feriel Ouerghi,talk
+10:00 AM,10:20 AM,MacLean Lab,Anupam Dey,talk
+10:20 AM,10:40 AM,Mooney Lab,Shirin Nataneli,talk
+10:40 AM,11:15 AM,Coffee break,,break
+11:15 AM,12:15 PM,Session II: Structural Bioinformatics and Genome Organization,,session
+11:15 AM,11:35 AM,Katritch Lab,"Wenjin ""Selina"" Liu",talk
+11:35 AM,11:55 AM,Fudenberg Lab,Peiyu Shi,talk
+11:55 AM,12:15 PM,Rohs Lab,Wei Yu Tang,talk
+12:15 PM,12:30 PM,Lightning Talks I,,session
+12:15 PM,12:18 PM,Finley Lab,Yiping Jia,talk
+12:18 PM,12:21 PM,Irimia Lab,Cecilia Liu,talk
+12:21 PM,12:24 PM,Katritch Lab,Emily Nguyen,talk
+12:24 PM,12:27 PM,MacLean Lab,Yingtong Liu,talk
+12:27 PM,12:30 PM,Rohs Lab,Peijun Lin,talk
+12:30 PM,12:40 PM,Game,,talk
+12:40 PM,1:45 PM,Lunch,,break
+1:45 PM,2:00 PM,Awards & pre-keynote address,,session
+1:45 PM,1:55 PM,Invited remark,Provost?,talk
+1:55 PM,2:00 PM,Awards,,talk
+2:00 PM,3:00 PM,Keynote address,Lior Pachter,talk
+3:00 PM,3:35 PM,Coffee break,,break
+3:35 PM,4:35 PM,Session III: Genomic Algorithms and Computational Methods,,session
+3:35 PM,3:55 PM,Chaisson Lab,Ishaan Thota,talk
+3:55 PM,4:15 PM,Chen Lab,Hanyi Wang,talk
+4:15 PM,4:35 PM,Sun Lab,Wei Liu,talk
+4:35 PM,4:45 PM,Closing remarks and acknowledgments,,session
+4:45 PM,6:00 PM,Poster session and reception,,session

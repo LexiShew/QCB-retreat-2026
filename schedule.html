@@ -7,7 +7,7 @@ header_image: /assets/images/header.jpg
 {%- comment -%}
   Generated from _data/abridged-schedule.csv and _data/detailed-schedule.csv.
   Shaded rows: any activity containing "break", "lunch", or "check-in".
-  Session headings: detailed rows with moderators but no speaker.
+  Detailed rows take their class from the Type column (session, break, talk, other).
   Speakers link to their talk abstract when "First Name" + "Last Name"
   in talk_abstracts.csv match the speaker name exactly.
 {%- endcomment -%}
@@ -26,12 +26,10 @@ header_image: /assets/images/header.jpg
     {%- assign kind = "" -%}
     {%- if act contains "break" or act contains "lunch" or act contains "check-in" -%}
       {%- assign kind = "break" -%}
-    {%- elsif act contains "session" -%}
-      {%- assign kind = "session" -%}
     {%- endif -%}
     <tr{% if kind != "" %} class="{{ kind }}"{% endif %}>
-      <td class="time">{% unless kind == "session" %}{{ s.Start | escape }}{% endunless %}</td>
-      <td>{{ s.Activity | escape }}</td>
+      <td class="time">{{ s.Start | escape }}</td>
+      <td>{{ s.Activity | escape | newline_to_br }}</td>
     </tr>
   {%- endfor %}
   </tbody>
@@ -44,18 +42,11 @@ header_image: /assets/images/header.jpg
   <thead><tr><th>Time</th><th>Activity</th><th>Speaker</th></tr></thead>
   <tbody>
   {%- for s in site.data['detailed-schedule'] %}
-    {%- assign act = s.Activity | downcase -%}
     {%- assign spk = s.Speaker | default: "" -%}
-    {%- assign mod = s.Moderators | default: "" -%}
-    {%- assign kind = "" -%}
-    {%- if act contains "break" or act contains "lunch" or act contains "check-in" -%}
-      {%- assign kind = "break" -%}
-    {%- elsif spk == "" and mod != "" -%}
-      {%- assign kind = "session" -%}
-    {%- endif -%}
-    <tr{% if kind != "" %} class="{{ kind }}"{% endif %}>
+    {%- assign kind = s.Type -%}
+    <tr{% if kind == "break" or kind == "session" %} class="{{ kind }}"{% endif %}>
       <td class="time">{% unless kind == "session" %}{{ s.Start | escape }} – {{ s.End | escape }}{% endunless %}</td>
-      <td>{{ s.Activity | escape }}</td>
+      <td>{{ s.Activity | escape | newline_to_br }}</td>
       <td>
         {%- assign talk = "" -%}
         {%- for t in site.data.talk_abstracts -%}
