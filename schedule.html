@@ -7,7 +7,8 @@ header_image: /assets/images/header.jpg
 {%- comment -%}
   Generated from _data/abridged-schedule.csv and _data/detailed-schedule.csv.
   Shaded rows: any activity containing "break", "lunch", or "check-in".
-  Detailed rows take their class from the Type column (session, break, talk, other).
+  Both tables take their row type from the Type column of their CSV (session, break, talk, other).
+  Abridged rows only style breaks; detailed session rows get the gold band and no time.
   Speakers link to their talk abstract when "First Name" + "Last Name"
   in talk_abstracts.csv match the speaker name exactly.
 {%- endcomment -%}
@@ -22,12 +23,8 @@ header_image: /assets/images/header.jpg
   <thead><tr><th>Time</th><th>Activity</th></tr></thead>
   <tbody>
   {%- for s in site.data['abridged-schedule'] %}
-    {%- assign act = s.Activity | downcase -%}
-    {%- assign kind = "" -%}
-    {%- if act contains "break" or act contains "lunch" or act contains "check-in" -%}
-      {%- assign kind = "break" -%}
-    {%- endif -%}
-    <tr{% if kind != "" %} class="{{ kind }}"{% endif %}>
+    {%- assign kind = s.Type -%}
+    <tr{% if kind == "break" %} class="break"{% endif %}>
       <td class="time">{{ s.Start | escape }}</td>
       <td>{{ s.Activity | escape | newline_to_br }}</td>
     </tr>

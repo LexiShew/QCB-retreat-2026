@@ -1,15 +1,15 @@
-Start,Activity
+Start,Activity,Type
 8:30 AM,"Check-in & breakfast
-Hang posters"
-9:15 AM,Welcome address
-9:40 AM,Session I: Population Genomics and Systems Biology
-10:40 AM,Coffee break
-11:15 AM,Session II: Structural Bioinformatics and Genome Organization  
-12:15 PM,Lightning Talks
-12:40 PM,Lunch
-1:45 PM,Awards & pre-keynote address
-2:00 PM,Keynote address
-3:00 PM,Coffee break
-3:35 PM,Session III: Genomic Algorithms and Computational Methods
-4:35 PM,Closing remarks
-4:45 PM,Poster session and reception
+Hang posters",break
+9:15 AM,Welcome address,other
+9:40 AM,Session I: Population Genomics and Systems Biology,session
+10:40 AM,Coffee break,break
+11:15 AM,Session II: Structural Bioinformatics and Genome Organization  ,session
+12:15 PM,Lightning Talks,session
+12:40 PM,Lunch,break
+1:45 PM,Awards & pre-keynote address,session
+2:00 PM,Keynote address,talk
+3:00 PM,Coffee break,break
+3:35 PM,Session III: Genomic Algorithms and Computational Methods,session
+4:35 PM,Closing remarks,session
+4:45 PM,Poster session and reception,session

@@ -17,7 +17,7 @@
         {% assign here = page.url %}
         <a href="{{ '/' | relative_url }}" {% if here == '/' or here == '/index.html' %}aria-current="page"{% endif %}>Home</a>
         <a href="{{ '/schedule/' | relative_url }}" {% if here contains '/schedule' %}aria-current="page"{% endif %}>Schedule</a>
-        <a href="{{ '/abstracts/' | relative_url }}" {% if here contains '/abstracts' %}aria-current="page"{% endif %}>Talks &amp; Abstracts</a>
+        <a href="{{ '/abstracts/' | relative_url }}" {% if here contains '/abstracts' %}aria-current="page"{% endif %}>Talks &amp; Posters</a>
       </nav>
     </div>
   </header>
