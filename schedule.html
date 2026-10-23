@@ -8,7 +8,8 @@ header_image: /assets/images/header.jpg
   Generated from _data/abridged-schedule.csv and _data/detailed-schedule.csv.
   Both tables take their row type from the Type column of their CSV (session, break, talk, other).
   Break rows get a pale cardinal band, session rows a gold one. Abridged rows
-  only style breaks; detailed session rows get the gold band and no time.
+  only style breaks; detailed session rows drop the time cell and span both
+  columns.
   A detailed row's Speaker is appended to the activity after a colon, and links
   to their talk abstract when "First Name" + "Last Name" in talk_abstracts.csv
   match the speaker name exactly.
@@ -43,23 +44,23 @@ header_image: /assets/images/header.jpg
     {%- assign spk = s.Speaker | default: "" -%}
     {%- assign kind = s.Type -%}
     <tr{% if kind == "break" or kind == "session" %} class="{{ kind }}"{% endif %}>
-      <td class="time">{% unless kind == "session" %}{{ s.Start | escape }} – {{ s.End | escape }}{% endunless %}</td>
-      <td>
+      {%- unless kind == "session" %}
+      <td class="time">{{ s.Start | escape }} – {{ s.End | escape }}</td>
+      {%- endunless %}
+      <td{% if kind == "session" %} colspan="2"{% endif %}>
         {{- s.Activity | escape | newline_to_br -}}
-        {%- if spk != "" %}:
-        {%- assign talk = "" -%}
-        {%- for t in site.data.talk_abstracts -%}
-          {%- assign full = t['First Name'] | append: " " | append: t['Last Name'] -%}
-          {%- if full == spk %}{%- assign talk = t -%}{%- endif -%}
-        {%- endfor %}
-        <span class="speaker">
+        {%- if spk != "" -%}
+          {%- assign talk = "" -%}
+          {%- for t in site.data.talk_abstracts -%}
+            {%- assign full = t['First Name'] | append: " " | append: t['Last Name'] -%}
+            {%- if full == spk %}{%- assign talk = t -%}{%- endif -%}
+          {%- endfor -%}
           {%- if talk != "" -%}
             {%- assign aid = talk[c.title] | strip | default: "Title to come" | slugify | prepend: "talk-" -%}
-            <a href="{{ '/abstracts/' | relative_url }}#{{ aid }}">{{ spk | escape }}</a>
+            : <a href="{{ '/abstracts/' | relative_url }}#{{ aid }}">{{ spk | escape }}</a>
           {%- else -%}
-            {{- spk | escape -}}
+            : {{ spk | escape }}
           {%- endif -%}
-        </span>
         {%- endif -%}
       </td>
     </tr>
