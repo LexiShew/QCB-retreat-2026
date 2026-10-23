@@ -13,7 +13,8 @@ poster_columns in _config.yml).
 
 Both lists are ordered by the sort_name column (the presenter's surname).
 Posters are split into sections as soon as poster_columns.section names a
-column that has values; until then they render as a single list.
+column that has values; until then they render as a single list. A section of
+0 or "" is treated as not yet assigned.
 {%- endcomment -%}
 
 {%- assign tc = site.talk_columns -%}
@@ -71,9 +72,16 @@ column that has values; until then they render as a single list.
     <h3 class="toc-label">Posters</h3>
     {%- for g in poster_sections %}
     {%- assign gi = forloop.index -%}
-    {%- assign sid = g.name | slugify | prepend: "posters-" -%}
+    {%- assign sname = g.name | strip -%}
+    {%- assign snum = sname | plus: 0 -%}
+    {%- if sname == "" or sname == "0" -%}
+    {%- assign sname = "Unassigned" -%}
+    {%- elsif snum > 0 -%}
+    {%- assign sname = sname | prepend: pc.section_label -%}
+    {%- endif -%}
+    {%- assign sid = sname | slugify | prepend: "posters-" -%}
     <div class="toc-group">
-      <h4><a href="#{{ sid }}">{{ g.name | default: "Unassigned" | escape }}</a></h4>
+      <h4><a href="#{{ sid }}">{{ sname | escape }}</a></h4>
       <ol>
         {%- for a in g.items %}
         {%- assign title = a[pc.title] | strip | default: "Title to come" -%}
@@ -125,10 +133,17 @@ column that has values; until then they render as a single list.
 {%- if poster_sections %}
 {%- for g in poster_sections %}
 {%- assign gi = forloop.index -%}
-{%- assign sid = g.name | slugify | prepend: "posters-" -%}
+{%- assign sname = g.name | strip -%}
+{%- assign snum = sname | plus: 0 -%}
+{%- if sname == "" or sname == "0" -%}
+{%- assign sname = "Unassigned" -%}
+{%- elsif snum > 0 -%}
+{%- assign sname = sname | prepend: pc.section_label -%}
+{%- endif -%}
+{%- assign sid = sname | slugify | prepend: "posters-" -%}
 <section class="abs-group">
   <h2 id="{{ sid }}">
-    <span class="kicker">Posters</span>{{ g.name | default: "Unassigned" | escape }}
+    <span class="kicker">Posters</span>{{ sname | escape }}
   </h2>
   {%- for a in g.items %}
   {%- assign title = a[pc.title] | strip | default: "Title to come" -%}
