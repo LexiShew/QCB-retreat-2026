@@ -6,12 +6,36 @@ header_image: /assets/images/header.jpg
 banner_title: Talks & Posters
 ---
 
-{%- comment -%} Talks are generated from _data/talk_abstracts.csv (columns:
-talk_columns in _config.yml). Posters are generated from
-_data/poster_abstracts.csv (columns: poster_columns in _config.yml). {%-
-endcomment -%} {%- assign tc = site.talk_columns -%} {%- assign talks =
-site.data.talk_abstracts -%} {%- assign pc = site.poster_columns -%} {%- assign
-posters = site.data.poster_abstracts -%}
+{%- comment -%}
+Talks are generated from _data/talk_abstracts.csv (columns: talk_columns in
+_config.yml). Posters are generated from _data/poster_abstracts.csv (columns:
+poster_columns in _config.yml).
+
+Both lists are ordered by the sort_name column (the presenter's surname).
+Posters are split into sections as soon as poster_columns.section names a
+column that has values; until then they render as a single list.
+{%- endcomment -%}
+
+{%- assign tc = site.talk_columns -%}
+{%- assign pc = site.poster_columns -%}
+
+{%- assign talks = site.data.talk_abstracts -%}
+{%- if tc.sort_name -%}
+{%- assign talks = talks | sort_natural: tc.sort_name -%}
+{%- endif -%}
+
+{%- assign posters = site.data.poster_abstracts -%}
+{%- if pc.sort_name -%}
+{%- assign posters = posters | sort_natural: pc.sort_name -%}
+{%- endif -%}
+
+{%- assign poster_sections = false -%}
+{%- if pc.section -%}
+{%- assign section_values = posters | map: pc.section | compact | join: "" -%}
+{%- if section_values != "" -%}
+{%- assign poster_sections = posters | group_by: pc.section | sort_natural: "name" -%}
+{%- endif -%}
+{%- endif -%}
 
 <h1>Talks &amp; Posters</h1>
 <p class="stats">{{ talks.size }} talks · {{ posters.size }} posters</p>
@@ -28,57 +52,119 @@ posters = site.data.poster_abstracts -%}
 
 <h2 id="contents">Contents</h2>
 <nav class="toc" aria-label="Table of contents">
-  <h3>Talks</h3>
-  <ol>
-    {%- for a in talks %} {%- assign aid = a[tc.title] | slugify | prepend:
-    "abs-" -%}
-    <li data-key="{{ aid }}">
-      <a href="#{{ aid }}">{{ a[tc.title] | escape }}</a>
-      <span class="toc-authors">— {{ a[tc.authors] | escape }}</span>
-    </li>
+  <div class="toc-group">
+    <h3><a href="#talks">Talks</a></h3>
+    <ol>
+      {%- for a in talks %}
+      {%- assign title = a[tc.title] | strip | default: "Title to come" -%}
+      {%- assign aid = title | slugify | prepend: "talk-" -%}
+      <li data-key="talk-{{ forloop.index }}">
+        <a href="#{{ aid }}">{{ title | escape }}</a>
+        <span class="toc-authors">{{ a[tc.authors] | escape }}</span>
+      </li>
+      {%- endfor %}
+    </ol>
+  </div>
+
+  {%- if poster_sections %}
+  <div class="toc-group">
+    <h3 class="toc-label">Posters</h3>
+    {%- for g in poster_sections %}
+    {%- assign gi = forloop.index -%}
+    {%- assign sid = g.name | slugify | prepend: "posters-" -%}
+    <div class="toc-group">
+      <h4><a href="#{{ sid }}">{{ g.name | default: "Unassigned" | escape }}</a></h4>
+      <ol>
+        {%- for a in g.items %}
+        {%- assign title = a[pc.title] | strip | default: "Title to come" -%}
+        {%- assign aid = title | slugify | prepend: "poster-" -%}
+        <li data-key="poster-{{ gi }}-{{ forloop.index }}">
+          <a href="#{{ aid }}">{{ title | escape }}</a>
+          <span class="toc-authors">{{ a[pc.authors] | escape }}</span>
+        </li>
+        {%- endfor %}
+      </ol>
+    </div>
     {%- endfor %}
-  </ol>
-  <h3>Posters</h3>
-  <ol>
-    {%- for a in posters %} {%- assign aid = a[pc.title] | slugify | prepend:
-    "abs-" -%}
-    <li data-key="{{ aid }}">
-      <a href="#{{ aid }}">{{ a[pc.title] | escape }}</a>
-      <span class="toc-authors">— {{ a[pc.authors] | escape }}</span>
-    </li>
-    {%- endfor %}
-  </ol>
+  </div>
+  {%- else %}
+  <div class="toc-group">
+    <h3><a href="#posters">Posters</a></h3>
+    <ol>
+      {%- for a in posters %}
+      {%- assign title = a[pc.title] | strip | default: "Title to come" -%}
+      {%- assign aid = title | slugify | prepend: "poster-" -%}
+      <li data-key="poster-{{ forloop.index }}">
+        <a href="#{{ aid }}">{{ title | escape }}</a>
+        <span class="toc-authors">{{ a[pc.authors] | escape }}</span>
+      </li>
+      {%- endfor %}
+    </ol>
+  </div>
+  {%- endif %}
 </nav>
 
-<h2 id="talks">Talks</h2>
-{%- for a in talks %} {%- assign aid = a[tc.title] | slugify | prepend: "abs-"
--%}
-<article class="abstract" id="{{ aid }}" data-key="{{ aid }}">
-  <span class="badge">Talk</span>
-  <h3>{{ a[tc.title] | escape }}</h3>
-  <p class="authors">{{ a[tc.authors] | escape }}</p>
-  {%- if a[tc.affiliation] and a[tc.affiliation] != "" %}
-  <p class="affil">{{ a[tc.affiliation] | escape }}</p>
-  {%- endif %}
-  <p class="body">{{ a[tc.abstract] | strip | escape | newline_to_br }}</p>
-  <p class="top"><a href="#contents">↑ Back to contents</a></p>
-</article>
-{%- endfor %}
+<section class="abs-group">
+  <h2 id="talks">Talks</h2>
+  {%- for a in talks %}
+  {%- assign title = a[tc.title] | strip | default: "Title to come" -%}
+  {%- assign aid = title | slugify | prepend: "talk-" -%}
+  <article class="abstract" id="{{ aid }}" data-key="talk-{{ forloop.index }}">
+    <span class="badge">Talk</span>
+    <h3>{{ title | escape }}</h3>
+    <p class="authors">{{ a[tc.authors] | escape }}</p>
+    {%- if a[tc.affiliation] and a[tc.affiliation] != "" %}
+    <p class="affil">{{ a[tc.affiliation] | escape }}</p>
+    {%- endif %}
+    <p class="body">{{ a[tc.abstract] | strip | escape | newline_to_br }}</p>
+    <p class="top"><a href="#contents">↑ Back to contents</a></p>
+  </article>
+  {%- endfor %}
+</section>
 
-<h2 id="posters">Posters</h2>
-{%- for a in posters %} {%- assign aid = a[pc.title] | slugify | prepend: "abs-"
--%}
-<article class="abstract" id="{{ aid }}" data-key="{{ aid }}">
-  <span class="badge">Poster</span>
-  <h3>{{ a[pc.title] | escape }}</h3>
-  <p class="authors">{{ a[pc.authors] | escape }}</p>
-  {%- if a[pc.affiliation] and a[pc.affiliation] != "" %}
-  <p class="affil">{{ a[pc.affiliation] | escape }}</p>
-  {%- endif %}
-  <p class="body">{{ a[pc.abstract] | strip | escape | newline_to_br }}</p>
-  <p class="top"><a href="#contents">↑ Back to contents</a></p>
-</article>
+{%- if poster_sections %}
+{%- for g in poster_sections %}
+{%- assign gi = forloop.index -%}
+{%- assign sid = g.name | slugify | prepend: "posters-" -%}
+<section class="abs-group">
+  <h2 id="{{ sid }}">
+    <span class="kicker">Posters</span>{{ g.name | default: "Unassigned" | escape }}
+  </h2>
+  {%- for a in g.items %}
+  {%- assign title = a[pc.title] | strip | default: "Title to come" -%}
+  {%- assign aid = title | slugify | prepend: "poster-" -%}
+  <article class="abstract" id="{{ aid }}" data-key="poster-{{ gi }}-{{ forloop.index }}">
+    <span class="badge">Poster</span>
+    <h3>{{ title | escape }}</h3>
+    <p class="authors">{{ a[pc.authors] | escape }}</p>
+    {%- if a[pc.affiliation] and a[pc.affiliation] != "" %}
+    <p class="affil">{{ a[pc.affiliation] | escape }}</p>
+    {%- endif %}
+    <p class="body">{{ a[pc.abstract] | strip | escape | newline_to_br }}</p>
+    <p class="top"><a href="#contents">↑ Back to contents</a></p>
+  </article>
+  {%- endfor %}
+</section>
 {%- endfor %}
+{%- else %}
+<section class="abs-group">
+  <h2 id="posters">Posters</h2>
+  {%- for a in posters %}
+  {%- assign title = a[pc.title] | strip | default: "Title to come" -%}
+  {%- assign aid = title | slugify | prepend: "poster-" -%}
+  <article class="abstract" id="{{ aid }}" data-key="poster-{{ forloop.index }}">
+    <span class="badge">Poster</span>
+    <h3>{{ title | escape }}</h3>
+    <p class="authors">{{ a[pc.authors] | escape }}</p>
+    {%- if a[pc.affiliation] and a[pc.affiliation] != "" %}
+    <p class="affil">{{ a[pc.affiliation] | escape }}</p>
+    {%- endif %}
+    <p class="body">{{ a[pc.abstract] | strip | escape | newline_to_br }}</p>
+    <p class="top"><a href="#contents">↑ Back to contents</a></p>
+  </article>
+  {%- endfor %}
+</section>
+{%- endif %}
 
 <script>
   (function () {
@@ -87,15 +173,21 @@ posters = site.data.poster_abstracts -%}
     var cards = Array.prototype.slice.call(
       document.querySelectorAll(".abstract"),
     );
+    // data-key is a per-list counter, not the title slug: a talk that is also
+    // submitted as a poster would otherwise share a key and one of the two
+    // contents entries would never be filtered.
     var tocItems = {};
     document.querySelectorAll(".toc li").forEach(function (li) {
       tocItems[li.dataset.key] = li;
     });
+    var groups = Array.prototype.slice.call(
+      document.querySelectorAll(".abs-group, .toc-group"),
+    );
     var text = cards.map(function (el) {
       return el.textContent.toLowerCase();
     });
 
-    input.addEventListener("input", function () {
+    function filter() {
       var terms = input.value.toLowerCase().trim().split(/\s+/).filter(Boolean);
       var shown = 0;
       cards.forEach(function (el, i) {
@@ -107,9 +199,23 @@ posters = site.data.poster_abstracts -%}
           tocItems[el.dataset.key].classList.toggle("hidden", !hit);
         if (hit) shown++;
       });
+      // Drop section headings that have nothing left under them.
+      groups.forEach(function (g) {
+        var kept = Array.prototype.some.call(
+          g.querySelectorAll(".abstract, .toc li"),
+          function (el) {
+            return !el.classList.contains("hidden");
+          },
+        );
+        g.classList.toggle("hidden", !kept);
+      });
       count.textContent = terms.length
         ? shown + " of " + cards.length + " match"
         : "";
-    });
+    }
+
+    input.addEventListener("input", filter);
+    // Browsers restore the field on reload / back, so re-apply it on load.
+    if (input.value) filter();
   })();
 </script>
