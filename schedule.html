@@ -6,11 +6,12 @@ header_image: /assets/images/header.jpg
 ---
 {%- comment -%}
   Generated from _data/abridged-schedule.csv and _data/detailed-schedule.csv.
-  Shaded rows: any activity containing "break", "lunch", or "check-in".
   Both tables take their row type from the Type column of their CSV (session, break, talk, other).
-  Abridged rows only style breaks; detailed session rows get the gold band and no time.
-  Speakers link to their talk abstract when "First Name" + "Last Name"
-  in talk_abstracts.csv match the speaker name exactly.
+  Break rows get a pale cardinal band, session rows a gold one. Abridged rows
+  only style breaks; detailed session rows get the gold band and no time.
+  A detailed row's Speaker is appended to the activity after a colon, and links
+  to their talk abstract when "First Name" + "Last Name" in talk_abstracts.csv
+  match the speaker name exactly.
 {%- endcomment -%}
 
 {%- assign c = site.talk_columns -%}
@@ -36,25 +37,29 @@ header_image: /assets/images/header.jpg
 <h2 id="detailed">Detailed schedule</h2>
 <div class="table-scroll">
 <table class="schedule">
-  <thead><tr><th>Time</th><th>Activity</th><th>Speaker</th></tr></thead>
+  <thead><tr><th>Time</th><th>Activity</th></tr></thead>
   <tbody>
   {%- for s in site.data['detailed-schedule'] %}
     {%- assign spk = s.Speaker | default: "" -%}
     {%- assign kind = s.Type -%}
     <tr{% if kind == "break" or kind == "session" %} class="{{ kind }}"{% endif %}>
       <td class="time">{% unless kind == "session" %}{{ s.Start | escape }} – {{ s.End | escape }}{% endunless %}</td>
-      <td>{{ s.Activity | escape | newline_to_br }}</td>
       <td>
+        {{- s.Activity | escape | newline_to_br -}}
+        {%- if spk != "" %}:
         {%- assign talk = "" -%}
         {%- for t in site.data.talk_abstracts -%}
           {%- assign full = t['First Name'] | append: " " | append: t['Last Name'] -%}
-          {%- if spk != "" and full == spk %}{%- assign talk = t -%}{%- endif -%}
-        {%- endfor -%}
-        {%- if talk != "" -%}
-          {%- assign aid = talk[c.title] | slugify | prepend: "abs-" -%}
-          <a href="{{ '/abstracts/' | relative_url }}#{{ aid }}">{{ spk | escape }}</a>
-        {%- elsif spk != "" -%}
-          {{ spk | escape }}
+          {%- if full == spk %}{%- assign talk = t -%}{%- endif -%}
+        {%- endfor %}
+        <span class="speaker">
+          {%- if talk != "" -%}
+            {%- assign aid = talk[c.title] | strip | default: "Title to come" | slugify | prepend: "talk-" -%}
+            <a href="{{ '/abstracts/' | relative_url }}#{{ aid }}">{{ spk | escape }}</a>
+          {%- else -%}
+            {{- spk | escape -}}
+          {%- endif -%}
+        </span>
         {%- endif -%}
       </td>
     </tr>

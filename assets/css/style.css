@@ -8,6 +8,11 @@
   --cardinal-dark: #6e0000;
   --gold: #ffcc00;
   --gold-soft: #fff4cc;
+  /* Pale cardinal matched to --gold-soft on relative luminance, not on hsl
+     lightness: red at the gold's hsl lightness measures Y 0.69 against the
+     gold's 0.90 and reads much heavier. #fff1f1 is Y 0.905, so the break
+     bands and the session bands carry the same weight. */
+  --cardinal-soft: #fff1f1;
   --ink: #4a1c1c;
   --muted: #7a5a52;
   --rule: #ecdcb8;
@@ -206,8 +211,7 @@ h3 {
   width: 1%;
 }
 .schedule tr.break td {
-  color: var(--muted);
-  background: none;
+  background: var(--cardinal-soft);
 }
 .schedule tr.session td {
   background: var(--gold-soft);

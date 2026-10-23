@@ -183,17 +183,40 @@ column that has values; until then they render as a single list.
     var groups = Array.prototype.slice.call(
       document.querySelectorAll(".abs-group, .toc-group"),
     );
+
+    // Punctuation becomes a space on both sides of the comparison, so
+    // "protein dna" still finds "Protein-DNA" and "fiber seq" finds
+    // "Fiber-seq".
+    function normalize(s) {
+      return s
+        .toLowerCase()
+        .replace(/[^\p{L}\p{N}]+/gu, " ")
+        .trim();
+    }
+
+    // Only the submitted fields are searchable. The badge and the "back to
+    // contents" link sit in every card, so searching the whole card matched
+    // "poster" or "contents" against all of them.
     var text = cards.map(function (el) {
-      return el.textContent.toLowerCase();
+      var fields = el.querySelectorAll("h3, .authors, .affil, .body");
+      return normalize(
+        Array.prototype.map
+          .call(fields, function (p) {
+            return p.textContent;
+          })
+          .join(" "),
+      );
     });
 
     function filter() {
-      var terms = input.value.toLowerCase().trim().split(/\s+/).filter(Boolean);
+      // The query is one phrase rather than a set of words that each have to
+      // turn up somewhere: "transcription factor" should not match an abstract
+      // that says "transcriptional" in one paragraph and "growth factor" in
+      // another.
+      var needle = normalize(input.value);
       var shown = 0;
       cards.forEach(function (el, i) {
-        var hit = terms.every(function (t) {
-          return text[i].indexOf(t) !== -1;
-        });
+        var hit = needle === "" || text[i].indexOf(needle) !== -1;
         el.classList.toggle("hidden", !hit);
         if (tocItems[el.dataset.key])
           tocItems[el.dataset.key].classList.toggle("hidden", !hit);
@@ -209,7 +232,7 @@ column that has values; until then they render as a single list.
         );
         g.classList.toggle("hidden", !kept);
       });
-      count.textContent = terms.length
+      count.textContent = needle
         ? shown + " of " + cards.length + " match"
         : "";
     }
