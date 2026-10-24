@@ -28,18 +28,34 @@ columns:
 # ---------------------------------------------------------------
 # Column names for the abstracts page. Each must match its CSV's header row exactly.
 # Talks: _data/talk_abstracts.csv. Posters: _data/poster_abstracts.csv.
+#
+# sort_name is the column the lists are alphabetised by. The form collects it
+# as the submitter's surname, which is the first author in all but a couple of
+# rows; blank it out to keep the CSV's own row order instead.
+#
+# section (posters only) groups the posters into their own contents sections.
+# If the column is missing or empty, posters render as a single list. Column
+# names are matched case-sensitively, so this must be the CSV header verbatim.
+#
+# section_label is prepended when a section value is a plain number, so a CSV
+# holding 1/2/3 reads as "Section 1". Blank it if the CSV holds full section
+# names instead. A value of 0 or an empty cell means "not assigned yet".
 # ---------------------------------------------------------------
 talk_columns:
   title: "Talk/Poster Title"
   authors: "Author(s)"
   affiliation: "Please indicate your lab affiliation."
   abstract: "Abstract"
+  sort_name: "Last Name"
 
 poster_columns:
   title: "Talk/Poster Title"
   authors: "Author(s)"
   affiliation: "Please indicate your lab affiliation."
   abstract: "Abstract"
+  sort_name: "Last Name"
+  section: "Section"
+  section_label: "Section "
 
 # Order that presentation types appear on the abstracts page.
 # Any type in the CSV that isn't listed here is shown afterward.
