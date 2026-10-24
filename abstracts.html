@@ -77,7 +77,9 @@ column that has values; until then they render as a single list. A section of
     {%- if sname == "" or sname == "0" -%}
     {%- assign sname = "Unassigned" -%}
     {%- elsif snum > 0 -%}
+    {%- assign stitle = pc.section_names[sname] -%}
     {%- assign sname = sname | prepend: pc.section_label -%}
+    {%- if stitle %}{% assign sname = sname | append: ": " | append: stitle %}{% endif -%}
     {%- endif -%}
     {%- assign sid = sname | slugify | prepend: "posters-" -%}
     <div class="toc-group">
@@ -138,7 +140,9 @@ column that has values; until then they render as a single list. A section of
 {%- if sname == "" or sname == "0" -%}
 {%- assign sname = "Unassigned" -%}
 {%- elsif snum > 0 -%}
+{%- assign stitle = pc.section_names[sname] -%}
 {%- assign sname = sname | prepend: pc.section_label -%}
+{%- if stitle %}{% assign sname = sname | append: ": " | append: stitle %}{% endif -%}
 {%- endif -%}
 {%- assign sid = sname | slugify | prepend: "posters-" -%}
 <section class="abs-group">
