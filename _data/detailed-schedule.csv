@@ -1,8 +1,7 @@
 Start,End,Activity,Speaker,Type
-8:30 AM,9:15 AM,"Check-in & breakfast
-Hang posters",,break
+8:30 AM,9:15 AM,Check-in & breakfast,,break
 9:15 AM,9:40 AM,Welcome and retreat overview,,session
-9:15 AM,9:20 AM,Retreat committee remark,Jazlyn & Adam,talk
+9:15 AM,9:20 AM,Welcome and Introductions,Jazlyn & Adam,talk
 9:20 AM,9:30 AM,Invited remark,James Bullock,talk
 9:30 AM,9:40 AM,Invited remark,Michael Waterman,talk
 9:40 AM,10:40 AM,Session I: Population Genomics and Systems Biology,,session
@@ -17,7 +16,7 @@ Hang posters",,break
 12:15 PM,12:30 PM,Lightning Talks I,,session
 12:15 PM,12:18 PM,Finley Lab,Yiping Jia,talk
 12:18 PM,12:21 PM,Irimia Lab,Cecilia Liu,talk
-12:21 PM,12:24 PM,Katritch Lab,Emily Nguyen,talk
+12:21 PM,12:24 PM,Katritch Lab,Chan Hong,talk
 12:24 PM,12:27 PM,MacLean Lab,Yingtong Liu,talk
 12:27 PM,12:30 PM,Rohs Lab,Peijun Lin,talk
 12:30 PM,12:40 PM,Game,,talk

@@ -10,9 +10,10 @@ header_image: /assets/images/header.jpg
   Break rows get a pale cardinal band, session rows a gold one. Abridged rows
   only style breaks; detailed session rows drop the time cell and span both
   columns.
-  A detailed row's Speaker is appended to the activity after a colon, and links
-  to their talk abstract when "First Name" + "Last Name" in talk_abstracts.csv
-  match the speaker name exactly.
+  A detailed row's Speaker is appended in bold to the activity after a colon.
+  When "First Name" + "Last Name" in talk_abstracts.csv match the speaker name
+  exactly, a link to their abstract follows in parentheses, labelled with the
+  part of the talk title before its first colon (or "abstract" if it has none).
 {%- endcomment -%}
 
 {%- assign c = site.talk_columns -%}
@@ -55,11 +56,13 @@ header_image: /assets/images/header.jpg
             {%- assign full = t['First Name'] | append: " " | append: t['Last Name'] -%}
             {%- if full == spk %}{%- assign talk = t -%}{%- endif -%}
           {%- endfor -%}
+          : <strong>{{ spk | escape }}</strong>
           {%- if talk != "" -%}
-            {%- assign aid = talk[c.title] | strip | default: "Title to come" | slugify | prepend: "talk-" -%}
-            : <a href="{{ '/abstracts/' | relative_url }}#{{ aid }}">{{ spk | escape }}</a>
-          {%- else -%}
-            : {{ spk | escape }}
+            {%- assign ttitle = talk[c.title] | strip | default: "Title to come" -%}
+            {%- assign aid = ttitle | slugify | prepend: "talk-" -%}
+            {%- assign tlabel = "abstract" -%}
+            {%- if ttitle contains ":" %}{% assign tlabel = ttitle | split: ":" | first | strip %}{% endif -%}
+            {{- " " -}}(<a href="{{ '/abstracts/' | relative_url }}#{{ aid }}">{{ tlabel | escape }}</a>)
           {%- endif -%}
         {%- endif -%}
       </td>
