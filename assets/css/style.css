@@ -231,7 +231,7 @@ h3 {
 }
 @keyframes target-flash {
   from {
-    background: var(--gold);
+    background: #b0b0b0;
   }
 }
 .table-scroll {
