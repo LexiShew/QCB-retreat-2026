@@ -10,7 +10,8 @@ header_image: /assets/images/header.jpg
   Break rows get a pale cardinal band, session rows a gold one. Abridged rows
   only style breaks; detailed session rows drop the time cell and span both
   columns.
-  A detailed row's Speaker is appended in bold to the activity after a colon.
+  A detailed row's Speaker is appended in bold to the activity after a colon,
+  followed by its Affiliation (if any) in plain text after a comma.
   When "First Name" + "Last Name" in talk_abstracts.csv match the speaker name
   exactly, a link to their abstract follows in parentheses, labelled with the
   part of the talk title before its first colon (or "abstract" if it has none).
@@ -43,6 +44,7 @@ header_image: /assets/images/header.jpg
   <tbody>
   {%- for s in site.data['detailed-schedule'] %}
     {%- assign spk = s.Speaker | default: "" -%}
+    {%- assign aff = s.Affiliation | default: "" -%}
     {%- assign kind = s.Type -%}
     <tr{% if kind == "break" or kind == "session" %} class="{{ kind }}"{% endif %}>
       {%- unless kind == "session" %}
@@ -57,6 +59,7 @@ header_image: /assets/images/header.jpg
             {%- if full == spk %}{%- assign talk = t -%}{%- endif -%}
           {%- endfor -%}
           : <strong>{{ spk | escape }}</strong>
+          {%- if aff != "" %}, {{ aff | escape }}{% endif -%}
           {%- if talk != "" -%}
             {%- assign ttitle = talk[c.title] | strip | default: "Title to come" -%}
             {%- assign aid = ttitle | slugify | prepend: "talk-" -%}
