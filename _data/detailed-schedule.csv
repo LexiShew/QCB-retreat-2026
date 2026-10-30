@@ -2,7 +2,7 @@ Start,End,Activity,Speaker,Affiliation,Type
 8:30 AM,9:15 AM,Check-in & breakfast,,,break
 9:15 AM,9:40 AM,Welcome and retreat overview,,,session
 9:15 AM,9:20 AM,Welcome and introductions,Dr. Jazlyn Mooney & Dr. Adam MacLean,,talk
-9:20 AM,9:30 AM,Invited remarks,Dr. James Bullock,Dean of the Dornsife College of Letters, Arts and Sciences,talk
+9:20 AM,9:30 AM,Invited remarks,Dr. James Bullock,"Dean of the Dornsife College of Letters, Arts and Sciences",talk
 9:30 AM,9:40 AM,Invited remarks,Dr. Michael Waterman,University Professor Emeritus,talk
 9:40 AM,10:40 AM,Session I: Population Genomics and Systems Biology,,,session
 9:40 AM,10:00 AM,Edge Lab,Feriel Ouerghi,,talk
@@ -22,7 +22,7 @@ Start,End,Activity,Speaker,Affiliation,Type
 12:30 PM,12:40 PM,Game,,,talk
 12:40 PM,1:50 PM,Lunch,,,break
 1:50 PM,2:00 PM,Awards,,,talk
-2:00 PM,3:00 PM,Keynote address,Dr. Lior Pachter,Professor of Computational Biology and Mathematical Sciences, Caltech,talk
+2:00 PM,3:00 PM,Keynote address,Dr. Lior Pachter,"Professor of Computational Biology and Mathematical Sciences, Caltech",talk
 3:00 PM,3:35 PM,Coffee break,,,break
 3:35 PM,4:35 PM,Session III: Genomic Algorithms and Computational Methods,,,session
 3:35 PM,3:55 PM,Chaisson Lab,Ishaan Thota,,talk
