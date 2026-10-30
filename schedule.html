@@ -46,23 +46,27 @@ header_image: /assets/images/header.jpg
     {%- assign spk = s.Speaker | default: "" -%}
     {%- assign aff = s.Affiliation | default: "" -%}
     {%- assign kind = s.Type -%}
-    <tr{% if kind == "break" or kind == "session" %} class="{{ kind }}"{% endif %}>
+    {%- assign talk = "" -%}
+    {%- if spk != "" -%}
+      {%- for t in site.data.talk_abstracts -%}
+        {%- assign full = t['First Name'] | append: " " | append: t['Last Name'] -%}
+        {%- if full == spk %}{%- assign talk = t -%}{%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
+    {%- if talk != "" -%}
+      {%- assign ttitle = talk[c.title] | strip | default: "Title to come" -%}
+      {%- assign aid = ttitle | slugify | prepend: "talk-" -%}
+    {%- endif -%}
+    <tr{% if talk != "" %} id="sched-{{ aid }}"{% endif %}{% if kind == "break" or kind == "session" %} class="{{ kind }}"{% endif %}>
       {%- unless kind == "session" %}
       <td class="time">{{ s.Start | escape }} – {{ s.End | escape }}</td>
       {%- endunless %}
       <td{% if kind == "session" %} colspan="2"{% endif %}>
         {{- s.Activity | escape | newline_to_br -}}
         {%- if spk != "" -%}
-          {%- assign talk = "" -%}
-          {%- for t in site.data.talk_abstracts -%}
-            {%- assign full = t['First Name'] | append: " " | append: t['Last Name'] -%}
-            {%- if full == spk %}{%- assign talk = t -%}{%- endif -%}
-          {%- endfor -%}
           : <strong>{{ spk | escape }}</strong>
           {%- if aff != "" %}, {{ aff | escape }}{% endif -%}
           {%- if talk != "" -%}
-            {%- assign ttitle = talk[c.title] | strip | default: "Title to come" -%}
-            {%- assign aid = ttitle | slugify | prepend: "talk-" -%}
             {%- assign tlabel = "abstract" -%}
             {%- if ttitle contains ":" %}{% assign tlabel = ttitle | split: ":" | first | strip %}{% endif -%}
             {{- " " -}}(<a href="{{ '/abstracts/' | relative_url }}#{{ aid }}">{{ tlabel | escape }}</a>)

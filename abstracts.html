@@ -127,7 +127,13 @@ column that has values; until then they render as a single list. A section of
     <p class="affil">{{ a[tc.affiliation] | escape }}</p>
     {%- endif %}
     <p class="body">{{ a[tc.abstract] | strip | escape | newline_to_br }}</p>
-    <p class="top"><a href="#contents">↑ Back to contents</a> · <a href="{{ '/schedule/' | relative_url }}#detailed">← Back to schedule</a></p>
+    {%- comment -%} Return to this talk's own schedule row when it has one. {%- endcomment -%}
+    {%- assign back = "detailed" -%}
+    {%- assign full = a['First Name'] | append: " " | append: a['Last Name'] -%}
+    {%- for s in site.data['detailed-schedule'] -%}
+      {%- if s.Speaker == full %}{% assign back = aid | prepend: "sched-" %}{% endif -%}
+    {%- endfor %}
+    <p class="top"><a href="#contents">↑ Back to contents</a> · <a href="{{ '/schedule/' | relative_url }}#{{ back }}">← Back to schedule</a></p>
   </article>
   {%- endfor %}
 </section>

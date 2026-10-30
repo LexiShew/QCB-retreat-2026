@@ -225,6 +225,15 @@ h3 {
   background: var(--gold-soft);
   font-weight: 600;
 }
+/* The talk row an abstract's "Back to schedule" link lands on. */
+.schedule tr:target td {
+  animation: target-flash 2.5s ease-out;
+}
+@keyframes target-flash {
+  from {
+    background: var(--gold);
+  }
+}
 .table-scroll {
   overflow-x: auto;
 }
