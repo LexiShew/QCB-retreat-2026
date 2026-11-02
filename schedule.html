@@ -68,7 +68,6 @@ header_image: /assets/images/header.jpg
           {%- if aff != "" %}, {{ aff | escape }}{% endif -%}
           {%- if talk != "" -%}
             {%- assign tlabel = "abstract" -%}
-            {%- if ttitle contains ":" %}{% assign tlabel = ttitle | split: ":" | first | strip %}{% endif -%}
             {{- " " -}}(<a href="{{ '/abstracts/' | relative_url }}#{{ aid }}">{{ tlabel | escape }}</a>)
           {%- endif -%}
         {%- endif -%}

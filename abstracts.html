@@ -6,37 +6,22 @@ header_image: /assets/images/header.jpg
 banner_title: Talks & Posters
 ---
 
-{%- comment -%}
-Talks are generated from _data/talk_abstracts.csv (columns: talk_columns in
-_config.yml). Posters are generated from _data/poster_abstracts.csv (columns:
-poster_columns in _config.yml).
-
-Both lists are ordered by the sort_name column (the presenter's surname).
-Posters are split into sections as soon as poster_columns.section names a
-column that has values; until then they render as a single list. A section of
-0 or "" is treated as not yet assigned.
-{%- endcomment -%}
-
-{%- assign tc = site.talk_columns -%}
-{%- assign pc = site.poster_columns -%}
-
-{%- assign talks = site.data.talk_abstracts -%}
-{%- if tc.sort_name -%}
-{%- assign talks = talks | sort_natural: tc.sort_name -%}
-{%- endif -%}
-
-{%- assign posters = site.data.poster_abstracts -%}
-{%- if pc.sort_name -%}
-{%- assign posters = posters | sort_natural: pc.sort_name -%}
-{%- endif -%}
-
-{%- assign poster_sections = false -%}
-{%- if pc.section -%}
-{%- assign section_values = posters | map: pc.section | compact | join: "" -%}
-{%- if section_values != "" -%}
-{%- assign poster_sections = posters | group_by: pc.section | sort_natural: "name" -%}
-{%- endif -%}
-{%- endif -%}
+{%- comment -%} Talks are generated from _data/talk_abstracts.csv (columns:
+talk_columns in _config.yml). Posters are generated from
+_data/poster_abstracts.csv (columns: poster_columns in _config.yml). Both lists
+are ordered by the sort_name column (the presenter's surname). Posters are split
+into sections as soon as poster_columns.section names a column that has values;
+until then they render as a single list. A section of 0 or "" is treated as not
+yet assigned. {%- endcomment -%} {%- assign tc = site.talk_columns -%} {%-
+assign pc = site.poster_columns -%} {%- assign talks = site.data.talk_abstracts
+-%} {%- if tc.sort_name -%} {%- assign talks = talks | sort_natural:
+tc.sort_name -%} {%- endif -%} {%- assign posters = site.data.poster_abstracts
+-%} {%- if pc.sort_name -%} {%- assign posters = posters | sort_natural:
+pc.sort_name -%} {%- endif -%} {%- assign poster_sections = false -%} {%- if
+pc.section -%} {%- assign section_values = posters | map: pc.section | compact |
+join: "" -%} {%- if section_values != "" -%} {%- assign poster_sections =
+posters | group_by: pc.section | sort_natural: "name" -%} {%- endif -%} {%-
+endif -%}
 
 <h1>Talks &amp; Posters</h1>
 <p class="stats">{{ talks.size }} talks · {{ posters.size }} posters</p>
@@ -56,9 +41,9 @@ column that has values; until then they render as a single list. A section of
   <div class="toc-group">
     <h3><a href="#talks">Talks</a></h3>
     <ol>
-      {%- for a in talks %}
-      {%- assign title = a[tc.title] | strip | default: "Title to come" -%}
-      {%- assign aid = title | slugify | prepend: "talk-" -%}
+      {%- for a in talks %} {%- assign title = a[tc.title] | strip | default:
+      "Title to come" -%} {%- assign aid = title | slugify | prepend: "talk-"
+      -%}
       <li data-key="talk-{{ forloop.index }}">
         <a href="#{{ aid }}">{{ title | escape }}</a>
         <span class="toc-authors">{{ a[tc.authors] | escape }}</span>
@@ -70,24 +55,19 @@ column that has values; until then they render as a single list. A section of
   {%- if poster_sections %}
   <div class="toc-group">
     <h3 class="toc-label">Posters</h3>
-    {%- for g in poster_sections %}
-    {%- assign gi = forloop.index -%}
-    {%- assign sname = g.name | strip -%}
-    {%- assign snum = sname | plus: 0 -%}
-    {%- if sname == "" or sname == "0" -%}
-    {%- assign sname = "Unassigned" -%}
-    {%- elsif snum > 0 -%}
-    {%- assign stitle = pc.section_names[sname] -%}
-    {%- assign sname = sname | prepend: pc.section_label -%}
-    {%- if stitle %}{% assign sname = sname | append: ": " | append: stitle %}{% endif -%}
-    {%- endif -%}
-    {%- assign sid = sname | slugify | prepend: "posters-" -%}
+    {%- for g in poster_sections %} {%- assign gi = forloop.index -%} {%- assign
+    sname = g.name | strip -%} {%- assign snum = sname | plus: 0 -%} {%- if
+    sname == "" or sname == "0" -%} {%- assign sname = "Unassigned" -%} {%-
+    elsif snum > 0 -%} {%- assign stitle = pc.section_names[sname] -%} {%-
+    assign sname = sname | prepend: pc.section_label -%} {%- if stitle %}{%
+    assign sname = sname | append: ": " | append: stitle %}{% endif -%} {%-
+    endif -%} {%- assign sid = sname | slugify | prepend: "posters-" -%}
     <div class="toc-group">
       <h4><a href="#{{ sid }}">{{ sname | escape }}</a></h4>
       <ol>
-        {%- for a in g.items %}
-        {%- assign title = a[pc.title] | strip | default: "Title to come" -%}
-        {%- assign aid = title | slugify | prepend: "poster-" -%}
+        {%- for a in g.items %} {%- assign title = a[pc.title] | strip |
+        default: "Title to come" -%} {%- assign aid = title | slugify | prepend:
+        "poster-" -%}
         <li data-key="poster-{{ gi }}-{{ forloop.index }}">
           <a href="#{{ aid }}">{{ title | escape }}</a>
           <span class="toc-authors">{{ a[pc.authors] | escape }}</span>
@@ -101,9 +81,9 @@ column that has values; until then they render as a single list. A section of
   <div class="toc-group">
     <h3><a href="#posters">Posters</a></h3>
     <ol>
-      {%- for a in posters %}
-      {%- assign title = a[pc.title] | strip | default: "Title to come" -%}
-      {%- assign aid = title | slugify | prepend: "poster-" -%}
+      {%- for a in posters %} {%- assign title = a[pc.title] | strip | default:
+      "Title to come" -%} {%- assign aid = title | slugify | prepend: "poster-"
+      -%}
       <li data-key="poster-{{ forloop.index }}">
         <a href="#{{ aid }}">{{ title | escape }}</a>
         <span class="toc-authors">{{ a[pc.authors] | escape }}</span>
@@ -116,9 +96,8 @@ column that has values; until then they render as a single list. A section of
 
 <section class="abs-group">
   <h2 id="talks">Talks</h2>
-  {%- for a in talks %}
-  {%- assign title = a[tc.title] | strip | default: "Title to come" -%}
-  {%- assign aid = title | slugify | prepend: "talk-" -%}
+  {%- for a in talks %} {%- assign title = a[tc.title] | strip | default: "Title
+  to come" -%} {%- assign aid = title | slugify | prepend: "talk-" -%}
   <article class="abstract" id="{{ aid }}" data-key="talk-{{ forloop.index }}">
     <span class="badge">Talk</span>
     <h3>{{ title | escape }}</h3>
@@ -127,38 +106,40 @@ column that has values; until then they render as a single list. A section of
     <p class="affil">{{ a[tc.affiliation] | escape }}</p>
     {%- endif %}
     <p class="body">{{ a[tc.abstract] | strip | escape | newline_to_br }}</p>
-    {%- comment -%} Return to this talk's own schedule row when it has one. {%- endcomment -%}
-    {%- assign back = "detailed" -%}
-    {%- assign full = a['First Name'] | append: " " | append: a['Last Name'] -%}
-    {%- for s in site.data['detailed-schedule'] -%}
-      {%- if s.Speaker == full %}{% assign back = aid | prepend: "sched-" %}{% endif -%}
-    {%- endfor %}
-    <p class="top"><a href="#contents">↑ Back to contents</a> · <a href="{{ '/schedule/' | relative_url }}#{{ back }}">← Back to schedule</a></p>
+    {%- comment -%} Return to this talk's own schedule row when it has one. {%-
+    endcomment -%} {%- assign back = "detailed" -%} {%- assign full = a['First
+    Name'] | append: " " | append: a['Last Name'] -%} {%- for s in
+    site.data['detailed-schedule'] -%} {%- if s.Speaker == full %}{% assign back
+    = aid | prepend: "sched-" %}{% endif -%} {%- endfor %}
+    <p class="top">
+      <a href="#contents">↑ Back to contents</a> ·
+      <a href="{{ '/schedule/' | relative_url }}#{{ back }}"
+        >← Jump to schedule</a
+      >
+    </p>
   </article>
   {%- endfor %}
 </section>
 
-{%- if poster_sections %}
-{%- for g in poster_sections %}
-{%- assign gi = forloop.index -%}
-{%- assign sname = g.name | strip -%}
-{%- assign snum = sname | plus: 0 -%}
-{%- if sname == "" or sname == "0" -%}
-{%- assign sname = "Unassigned" -%}
-{%- elsif snum > 0 -%}
-{%- assign stitle = pc.section_names[sname] -%}
-{%- assign sname = sname | prepend: pc.section_label -%}
-{%- if stitle %}{% assign sname = sname | append: ": " | append: stitle %}{% endif -%}
-{%- endif -%}
-{%- assign sid = sname | slugify | prepend: "posters-" -%}
+{%- if poster_sections %} {%- for g in poster_sections %} {%- assign gi =
+forloop.index -%} {%- assign sname = g.name | strip -%} {%- assign snum = sname
+| plus: 0 -%} {%- if sname == "" or sname == "0" -%} {%- assign sname =
+"Unassigned" -%} {%- elsif snum > 0 -%} {%- assign stitle =
+pc.section_names[sname] -%} {%- assign sname = sname | prepend: pc.section_label
+-%} {%- if stitle %}{% assign sname = sname | append: ": " | append: stitle %}{%
+endif -%} {%- endif -%} {%- assign sid = sname | slugify | prepend: "posters-"
+-%}
 <section class="abs-group">
   <h2 id="{{ sid }}">
     <span class="kicker">Posters</span>{{ sname | escape }}
   </h2>
-  {%- for a in g.items %}
-  {%- assign title = a[pc.title] | strip | default: "Title to come" -%}
-  {%- assign aid = title | slugify | prepend: "poster-" -%}
-  <article class="abstract" id="{{ aid }}" data-key="poster-{{ gi }}-{{ forloop.index }}">
+  {%- for a in g.items %} {%- assign title = a[pc.title] | strip | default:
+  "Title to come" -%} {%- assign aid = title | slugify | prepend: "poster-" -%}
+  <article
+    class="abstract"
+    id="{{ aid }}"
+    data-key="poster-{{ gi }}-{{ forloop.index }}"
+  >
     <span class="badge">Poster</span>
     <h3>{{ title | escape }}</h3>
     <p class="authors">{{ a[pc.authors] | escape }}</p>
@@ -166,18 +147,25 @@ column that has values; until then they render as a single list. A section of
     <p class="affil">{{ a[pc.affiliation] | escape }}</p>
     {%- endif %}
     <p class="body">{{ a[pc.abstract] | strip | escape | newline_to_br }}</p>
-    <p class="top"><a href="#contents">↑ Back to contents</a> · <a href="{{ '/schedule/' | relative_url }}#detailed">← Back to schedule</a></p>
+    <p class="top">
+      <a href="#contents">↑ Back to contents</a> ·
+      <a href="{{ '/schedule/' | relative_url }}#detailed"
+        >← Back to schedule</a
+      >
+    </p>
   </article>
   {%- endfor %}
 </section>
-{%- endfor %}
-{%- else %}
+{%- endfor %} {%- else %}
 <section class="abs-group">
   <h2 id="posters">Posters</h2>
-  {%- for a in posters %}
-  {%- assign title = a[pc.title] | strip | default: "Title to come" -%}
-  {%- assign aid = title | slugify | prepend: "poster-" -%}
-  <article class="abstract" id="{{ aid }}" data-key="poster-{{ forloop.index }}">
+  {%- for a in posters %} {%- assign title = a[pc.title] | strip | default:
+  "Title to come" -%} {%- assign aid = title | slugify | prepend: "poster-" -%}
+  <article
+    class="abstract"
+    id="{{ aid }}"
+    data-key="poster-{{ forloop.index }}"
+  >
     <span class="badge">Poster</span>
     <h3>{{ title | escape }}</h3>
     <p class="authors">{{ a[pc.authors] | escape }}</p>
@@ -185,7 +173,12 @@ column that has values; until then they render as a single list. A section of
     <p class="affil">{{ a[pc.affiliation] | escape }}</p>
     {%- endif %}
     <p class="body">{{ a[pc.abstract] | strip | escape | newline_to_br }}</p>
-    <p class="top"><a href="#contents">↑ Back to contents</a> · <a href="{{ '/schedule/' | relative_url }}#detailed">← Back to schedule</a></p>
+    <p class="top">
+      <a href="#contents">↑ Back to contents</a> ·
+      <a href="{{ '/schedule/' | relative_url }}#detailed"
+        >← Back to schedule</a
+      >
+    </p>
   </article>
   {%- endfor %}
 </section>
