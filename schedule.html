@@ -13,8 +13,8 @@ header_image: /assets/images/header.jpg
   A detailed row's Speaker is appended in bold to the activity after a colon,
   followed by its Affiliation (if any) in plain text after a comma.
   When "First Name" + "Last Name" in talk_abstracts.csv match the speaker name
-  exactly, a link to their abstract follows in parentheses, labelled with the
-  part of the talk title before its first colon (or "abstract" if it has none).
+  exactly (or accounting for a nickname), a link to their abstract follows in
+  parentheses.
 {%- endcomment -%}
 
 {%- assign c = site.talk_columns -%}
@@ -50,7 +50,10 @@ header_image: /assets/images/header.jpg
     {%- if spk != "" -%}
       {%- for t in site.data.talk_abstracts -%}
         {%- assign full = t['First Name'] | append: " " | append: t['Last Name'] -%}
-        {%- if full == spk %}{%- assign talk = t -%}{%- endif -%}
+        {%- assign fname = t['First Name'] | split: " " | first -%}
+        {%- if full == spk or (spk contains fname and spk contains t['Last Name']) -%}
+          {%- assign talk = t -%}
+        {%- endif -%}
       {%- endfor -%}
     {%- endif -%}
     {%- if talk != "" -%}
