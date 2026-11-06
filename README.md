@@ -75,6 +75,8 @@ Every abstract has a stable anchor built from its title, e.g. `/abstracts/#talk-
 
 In the detailed schedule, the speaker appears in bold after the activity, followed by their affiliation. If a `Speaker` value exactly matches `First Name` + space + `Last Name` in `talk_abstracts.csv`, the row links to that talk's abstract, and the abstract links back to the row. Names that differ in any way, such as a missing title or a middle initial, don't link. Use `Dr. …` only for speakers who don't have an abstract.
 
+On a row with no `Speaker`, the `Affiliation` text is shown after the activity in regular-weight italics. Session rows use this for "(chaired by …)".
+
 ## Exporting CSVs without garbled characters
 
 Characters like `µ`, `–` or accented names show up as `�` when a CSV isn't saved as UTF-8. This usually comes from Excel's default *CSV (Comma delimited)* format or from text pasted out of Word.

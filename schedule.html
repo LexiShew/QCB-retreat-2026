@@ -12,6 +12,8 @@ header_image: /assets/images/header.jpg
   columns.
   A detailed row's Speaker is appended in bold to the activity after a colon,
   followed by its Affiliation (if any) in plain text after a comma.
+  A row with no Speaker shows its Affiliation after the activity instead,
+  which is where a session's "(chaired by ...)" goes.
   When "First Name" + "Last Name" in talk_abstracts.csv match the speaker name
   exactly (or accounting for a nickname), a link to their abstract follows in
   parentheses.
@@ -73,6 +75,8 @@ header_image: /assets/images/header.jpg
             {%- assign tlabel = "abstract" -%}
             {{- " " -}}(<a href="{{ '/abstracts/' | relative_url }}#{{ aid }}">{{ tlabel | escape }}</a>)
           {%- endif -%}
+        {%- elsif aff != "" -%}
+          {{- " " -}}<span class="chairs">{{ aff | escape }}</span>
         {%- endif -%}
       </td>
     </tr>

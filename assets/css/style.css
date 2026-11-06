@@ -225,6 +225,10 @@ h3 {
   background: var(--gold-soft);
   font-weight: 600;
 }
+.schedule .chairs {
+  font-weight: 400;
+  font-style: italic;
+}
 /* The talk row an abstract's "Back to schedule" link lands on. */
 .schedule tr:target td {
   animation: target-flash 2.5s ease-out;
